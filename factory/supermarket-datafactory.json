@@ -1,0 +1,9 @@
+{
+	"name": "supermarket-datafactory",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "211980fd-d35f-468f-9f8b-8ec708eb533a",
+		"tenantId": "5686a1d0-ec46-4afc-8363-8ef9c2b320dc"
+	}
+}

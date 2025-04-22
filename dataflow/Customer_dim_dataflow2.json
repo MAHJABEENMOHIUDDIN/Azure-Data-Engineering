@@ -1,0 +1,92 @@
+{
+	"name": "Customer_dim_dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "source_dataset",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "sink_dataset",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "addingcolumns"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "filter1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          customer_id as short,",
+				"          full_name as string,",
+				"          gender as string,",
+				"          age as short,",
+				"          email as string,",
+				"          phone as string,",
+				"          address as string,",
+				"          loyalty_program_member as boolean,",
+				"          join_date as date,",
+				"          preferred_store as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 derive(age_new = toInteger(trim(toString(age))),",
+				"          loyalty_program_member_new = iif(trim(lower(toString(loyalty_program_member))) == 'true', true(),false()),",
+				"          join_date_new = toDate(trim(toString(join_date))),",
+				"          full_name_new = trim(full_name),",
+				"          gender_new = trim(gender),",
+				"          phone_new = trim(phone),",
+				"          address_new = trim(address)) ~> addingcolumns",
+				"addingcolumns select(mapColumn(",
+				"          customer_id,",
+				"          full_name,",
+				"          gender,",
+				"          age,",
+				"          email,",
+				"          phone,",
+				"          address,",
+				"          loyalty_program_member,",
+				"          join_date,",
+				"          preferred_store,",
+				"          age_new,",
+				"          loyalty_program_member_new,",
+				"          join_date_new,",
+				"          full_name_new,",
+				"          gender_new,",
+				"          phone_new,",
+				"          address_new",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: false) ~> select1",
+				"select1 filter(isNull(age_new) == false() && isNull(join_date_new) == false()  && trim(full_name_new) != \"\") ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['DimCustomer.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}
