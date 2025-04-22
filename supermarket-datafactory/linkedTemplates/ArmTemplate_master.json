@@ -1,0 +1,188 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "supermarket-datafactory"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
+		},
+		"OnpremisesSqlServer_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'OnpremisesSqlServer'"
+		},
+		"OnpremisesSqlServer2_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'OnpremisesSqlServer2'"
+		},
+		"Sink_AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'Sink_AzureDataLakeStorage1'"
+		},
+		"SqlServer1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SqlServer1'"
+		},
+		"target_AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'target_AzureDataLakeStorage1'"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://sourcestorageaccount1234.dfs.core.windows.net/"
+		},
+		"OnpremisesSqlServer_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "Mahjabeen"
+		},
+		"OnpremisesSqlServer_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "RetailDatabase"
+		},
+		"OnpremisesSqlServer_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sa"
+		},
+		"OnpremisesSqlServer2_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "Mahjabeen"
+		},
+		"OnpremisesSqlServer2_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "RetailDatabase"
+		},
+		"OnpremisesSqlServer2_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sa"
+		},
+		"Sink_AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://targetlakestorageaccount.dfs.core.windows.net/"
+		},
+		"SqlServer1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "Mahjabeen"
+		},
+		"SqlServer1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "Supermarket_Staging"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sa"
+		},
+		"target_AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://targetlakestorageaccount.dfs.core.windows.net/"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "supermarket-datafactory_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureDataLakeStorage1_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					},
+					"Sink_AzureDataLakeStorage1_accountKey": {
+						"value": "[parameters('Sink_AzureDataLakeStorage1_accountKey')]"
+					},
+					"target_AzureDataLakeStorage1_accountKey": {
+						"value": "[parameters('target_AzureDataLakeStorage1_accountKey')]"
+					},
+					"OnpremisesSqlServer_password": {
+						"value": "[parameters('OnpremisesSqlServer_password')]"
+					},
+					"OnpremisesSqlServer2_password": {
+						"value": "[parameters('OnpremisesSqlServer2_password')]"
+					},
+					"SqlServer1_password": {
+						"value": "[parameters('SqlServer1_password')]"
+					},
+					"AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"Sink_AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('Sink_AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"target_AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('target_AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"OnpremisesSqlServer_properties_typeProperties_server": {
+						"value": "[parameters('OnpremisesSqlServer_properties_typeProperties_server')]"
+					},
+					"OnpremisesSqlServer_properties_typeProperties_database": {
+						"value": "[parameters('OnpremisesSqlServer_properties_typeProperties_database')]"
+					},
+					"OnpremisesSqlServer_properties_typeProperties_userName": {
+						"value": "[parameters('OnpremisesSqlServer_properties_typeProperties_userName')]"
+					},
+					"OnpremisesSqlServer2_properties_typeProperties_server": {
+						"value": "[parameters('OnpremisesSqlServer2_properties_typeProperties_server')]"
+					},
+					"OnpremisesSqlServer2_properties_typeProperties_database": {
+						"value": "[parameters('OnpremisesSqlServer2_properties_typeProperties_database')]"
+					},
+					"OnpremisesSqlServer2_properties_typeProperties_userName": {
+						"value": "[parameters('OnpremisesSqlServer2_properties_typeProperties_userName')]"
+					},
+					"SqlServer1_properties_typeProperties_server": {
+						"value": "[parameters('SqlServer1_properties_typeProperties_server')]"
+					},
+					"SqlServer1_properties_typeProperties_database": {
+						"value": "[parameters('SqlServer1_properties_typeProperties_database')]"
+					},
+					"SqlServer1_properties_typeProperties_userName": {
+						"value": "[parameters('SqlServer1_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "supermarket-datafactory_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'supermarket-datafactory_ArmTemplate_0')]"
+			]
+		}
+	]
+}

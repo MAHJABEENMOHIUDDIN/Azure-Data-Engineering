@@ -1,0 +1,69 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "supermarket-datafactory"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"OnpremisesSqlServer_password": {
+			"value": ""
+		},
+		"OnpremisesSqlServer2_password": {
+			"value": ""
+		},
+		"Sink_AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"SqlServer1_password": {
+			"value": ""
+		},
+		"target_AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://sourcestorageaccount1234.dfs.core.windows.net/"
+		},
+		"OnpremisesSqlServer_properties_typeProperties_server": {
+			"value": "Mahjabeen"
+		},
+		"OnpremisesSqlServer_properties_typeProperties_database": {
+			"value": "RetailDatabase"
+		},
+		"OnpremisesSqlServer_properties_typeProperties_userName": {
+			"value": "sa"
+		},
+		"OnpremisesSqlServer2_properties_typeProperties_server": {
+			"value": "Mahjabeen"
+		},
+		"OnpremisesSqlServer2_properties_typeProperties_database": {
+			"value": "RetailDatabase"
+		},
+		"OnpremisesSqlServer2_properties_typeProperties_userName": {
+			"value": "sa"
+		},
+		"Sink_AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://targetlakestorageaccount.dfs.core.windows.net/"
+		},
+		"SqlServer1_properties_typeProperties_server": {
+			"value": "Mahjabeen"
+		},
+		"SqlServer1_properties_typeProperties_database": {
+			"value": "Supermarket_Staging"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
+			"value": "sa"
+		},
+		"target_AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://targetlakestorageaccount.dfs.core.windows.net/"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
