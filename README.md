@@ -28,6 +28,24 @@ Azure Data Engineering demo project
 ## Select created Onpremises linked service, then select table from dropdown menu, ok
 ![image](https://github.com/user-attachments/assets/d3299afd-2492-4eb1-85ad-cd150c25f0db)
 
+## To create sink dataset, click on sink, newdataset, search and select DataLake Gen2 storage account
+![image](https://github.com/user-attachments/assets/189aa832-905e-4371-9233-6294cf2c3ecb)
+
+## select previously created linkedservice for AutoresolveIR, create a folder with bronze as raw data is being stored here, then click on ok
+![image](https://github.com/user-attachments/assets/f3f4bbb7-f2fd-473d-ab11-ea93478316a2)
+
+## Click on pipeline validation, then debug it, once you get succeeded status, publish the pipeline
+![image](https://github.com/user-attachments/assets/60b8cbec-6965-44d2-ba71-837ce22ab045)
+
+## Finally bronze folder got created and raw data got loaded from onpremises sql server into Datalake Gen2 storage account.
+![image](https://github.com/user-attachments/assets/0b21327a-44c9-47e8-9209-f0becac3d0d6)
+
+
+
+
+
+
+
 
 
 
