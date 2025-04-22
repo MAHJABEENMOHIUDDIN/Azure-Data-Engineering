@@ -28,8 +28,7 @@ Azure Data Engineering demo project
 ## Select created Onpremises linked service, then select table from dropdown menu, ok
 ![image](https://github.com/user-attachments/assets/d3299afd-2492-4eb1-85ad-cd150c25f0db)
 
-## Create Source dataset parameter
-![image](https://github.com/user-attachments/assets/a5956277-31d2-4ab2-b261-2bb90fc6e3c6)
+
 
 
 
