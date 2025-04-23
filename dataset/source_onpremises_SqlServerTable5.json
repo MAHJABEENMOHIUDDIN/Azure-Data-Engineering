@@ -1,0 +1,45 @@
+{
+	"name": "source_onpremises_SqlServerTable5",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Onprem_SqlServer_new",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tablename2": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "OrderID",
+				"type": "varchar"
+			},
+			{
+				"name": "CustomerID",
+				"type": "varchar"
+			},
+			{
+				"name": "OrderDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Amount",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "@dataset().tablename2",
+				"type": "Expression"
+			}
+		}
+	}
+}
