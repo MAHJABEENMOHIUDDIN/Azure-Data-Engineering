@@ -100,10 +100,13 @@ Configured a trigger to schedule the pipeline execution
 ![image](https://github.com/user-attachments/assets/5cb04fb5-9656-4461-afd2-a1d57aea4327)
 
 
+# Transformed Data loaded into Sink
 
+![image](https://github.com/user-attachments/assets/281c33a6-a1fd-4700-a0d8-6ec87fce4339)
 
+# Loaded data preview
 
-
+![image](https://github.com/user-attachments/assets/9786e585-6309-406e-807f-0279c3af7648)
 
 
 
