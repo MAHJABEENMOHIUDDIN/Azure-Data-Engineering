@@ -57,7 +57,7 @@ Loads the data into a target Azure SQL Database
 Prepares the data for downstream analytics and visualization using Power BI or other tools
 
 🧱 Database Design
-Created a database named Supermarket_Staging with the following tables:
+Created a database named SalesOrdersDB with the following tables:
 
 Customers
 
