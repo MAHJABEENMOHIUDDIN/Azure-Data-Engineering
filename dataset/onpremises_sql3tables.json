@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"Table_name_source": {
+			"TableName": {
 				"type": "string"
 			}
 		},
@@ -37,7 +37,7 @@
 		"typeProperties": {
 			"schema": "dbo",
 			"table": {
-				"value": "@dataset().Table_name_source",
+				"value": "@dataset().TableName",
 				"type": "Expression"
 			}
 		}

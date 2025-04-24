@@ -1,5 +1,5 @@
 {
-	"name": "pipeline2",
+	"name": "Copy_data_from_onprem_to_AzureDB_pipeline2",
 	"properties": {
 		"activities": [
 			{
@@ -12,6 +12,7 @@
 						"value": "@pipeline().parameters.TableList",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "multi_table_copydata",
@@ -51,7 +52,7 @@
 									"referenceName": "onpremises_sql3tables",
 									"type": "DatasetReference",
 									"parameters": {
-										"Table_name_source": {
+										"TableName": {
 											"value": "@item()",
 											"type": "Expression"
 										}
@@ -63,7 +64,7 @@
 									"referenceName": "sink_AzureSqlTable",
 									"type": "DatasetReference",
 									"parameters": {
-										"Table_name_sink": {
+										"TableName": {
 											"value": "@item()",
 											"type": "Expression"
 										}

@@ -6,11 +6,15 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "pipeline2",
+					"referenceName": "Copy_data_from_onprem_to_AzureDB_pipeline2",
 					"type": "PipelineReference"
 				},
 				"parameters": {
-					"TableList": "dob.OrderDetails"
+					"TableList": [
+						"Customers",
+						"Orders",
+						"OrderDetails"
+					]
 				}
 			}
 		],
