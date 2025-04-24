@@ -40,7 +40,41 @@ Azure Data Engineering demo project
 ## Finally bronze folder got created and raw data got loaded from onpremises sql server into Datalake Gen2 storage account.
 ![image](https://github.com/user-attachments/assets/0b21327a-44c9-47e8-9209-f0becac3d0d6)
 
+====================================================================================================================================================================================
+# Project 2
+# ✅ Project Overview: Retail Analytics Pipeline on Azure
+This project showcases the implementation of a retail sales data pipeline using Azure Data Factory and SQL Server. It simulates a real-world scenario where sales data is ingested from an on-premises SQL Server and loaded into an Azure SQL Database for analysis and reporting.
 
+💡 Project Goal
+The goal of this project is to build a robust, automated, and scalable data pipeline that:
+
+Connects to an on-premises SQL Server using a Self-hosted Integration Runtime
+
+Ingests retail sales data via Azure Data Factory with dynamic parameterization and ForEach activity
+
+Loads the data into a target Azure SQL Database
+
+Prepares the data for downstream analytics and visualization using Power BI or other tools
+
+🧱 Database Design
+Created a database named Supermarket_Staging with the following tables:
+
+Customers
+
+Orders
+
+OrderDetails
+
+These tables represent essential entities in a retail sales environment and are structured to support joins and transformations during data ingestion.
+
+🚀 Data Pipeline Setup
+Built an ADF pipeline to automate data ingestion
+
+Used Copy Data activity with dynamic content and parameterization
+
+Configured a trigger to schedule the pipeline execution
+![image](https://github.com/user-attachments/assets/976e0d50-534c-4a89-b795-0807e72812bc)
+![image](https://github.com/user-attachments/assets/c57895af-73bc-4673-8f7f-ba276bba5d77)
 
 
 
