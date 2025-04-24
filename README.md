@@ -75,6 +75,8 @@ Used Copy Data activity with dynamic content and parameterization
 Configured a trigger to schedule the pipeline execution
 ![image](https://github.com/user-attachments/assets/976e0d50-534c-4a89-b795-0807e72812bc)
 
+![image](https://github.com/user-attachments/assets/0d6328e5-7990-4b7a-9ac8-0b460042697b)
+
 ![image](https://github.com/user-attachments/assets/c57895af-73bc-4673-8f7f-ba276bba5d77)
 
 ![image](https://github.com/user-attachments/assets/915af9b8-21f0-48bc-a6ff-90a50310e065)
