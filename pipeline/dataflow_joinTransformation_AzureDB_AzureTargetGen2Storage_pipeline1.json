@@ -27,6 +27,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"Filedata": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
