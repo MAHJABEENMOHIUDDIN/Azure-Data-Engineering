@@ -83,6 +83,22 @@ Configured a trigger to schedule the pipeline execution
 
 
 
+![image](https://github.com/user-attachments/assets/3d247d87-5a01-49bf-99d9-1a19826ac84d)
+
+![image](https://github.com/user-attachments/assets/07b0291c-f5a8-4a24-b45a-7021886ce9fa)
+
+
+![image](https://github.com/user-attachments/assets/48ce9c76-4d3b-447f-99e0-2a101e858ce0)
+
+
+![image](https://github.com/user-attachments/assets/43509b7f-c4c1-4e1f-8892-94a4a627bcd9)
+
+![image](https://github.com/user-attachments/assets/d6933f15-12b5-4882-97a3-44176daf799f)
+
+
+
+![image](https://github.com/user-attachments/assets/5cb04fb5-9656-4461-afd2-a1d57aea4327)
+
 
 
 
