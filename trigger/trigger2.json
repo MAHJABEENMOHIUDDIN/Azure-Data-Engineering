@@ -21,6 +21,9 @@
 				"pipelineReference": {
 					"referenceName": "dataflow_joinTransformation_AzureDB_AzureTargetGen2Storage_pipeline1",
 					"type": "PipelineReference"
+				},
+				"parameters": {
+					"Filedata": "@formatDateTime(trigger().scheduledTime, 'yyyy-MM-dd')"
 				}
 			}
 		],
