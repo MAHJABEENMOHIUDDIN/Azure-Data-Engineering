@@ -1,0 +1,152 @@
+{
+	"name": "dataflow_joinTransformation_fromAzureDB_to_AzureTargetGen2StorageAccount",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable2",
+						"type": "DatasetReference"
+					},
+					"name": "Source1Customers"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable4",
+						"type": "DatasetReference"
+					},
+					"name": "source3OrderDetails"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable5",
+						"type": "DatasetReference"
+					},
+					"name": "source2Orders"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Sink_Datasett",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "join1"
+				},
+				{
+					"name": "join2"
+				},
+				{
+					"name": "filter2removingbaddata"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "sort1dayaByColumns"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          CustomerID as string,",
+				"          CustomerName as string,",
+				"          Country as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> Source1Customers",
+				"source(output(",
+				"          DetailID as integer,",
+				"          OrderID as string,",
+				"          ProductName as string,",
+				"          Quantity as integer,",
+				"          PricePerUnit as decimal(10,2)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source3OrderDetails",
+				"source(output(",
+				"          OrderID as string,",
+				"          CustomerID as string,",
+				"          OrderDate as timestamp,",
+				"          Amount as decimal(10,2)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source2Orders",
+				"Source1Customers, source2Orders join(Source1Customers@CustomerID == source2Orders@CustomerID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1, source3OrderDetails join(source2Orders@OrderID == source3OrderDetails@OrderID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join2",
+				"join2 filter(Amount > 0 && PricePerUnit > 0) ~> filter2removingbaddata",
+				"filter2removingbaddata derive(TotalPrice = Quantity *PricePerUnit,",
+				"          FormattedDate = toString(OrderDate , 'yyyy-MM-dd'),",
+				"          CountryUpperletter = trim(upper(Country)),",
+				"          CustomernameFirstletterCap = trim(initCap(CustomerName)),",
+				"          OrderYear = year(OrderDate),",
+				"          HighValueCustomer = iif(Amount >= 200, 'Yes', 'No'),",
+				"          productnamelower = trim(lower(ProductName))) ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          CustomerID = Source1Customers@CustomerID,",
+				"          CustomerName,",
+				"          Country,",
+				"          OrderID = source2Orders@OrderID,",
+				"          CustomerID = source2Orders@CustomerID,",
+				"          OrderDate,",
+				"          Amount,",
+				"          DetailID,",
+				"          OrderID = source3OrderDetails@OrderID,",
+				"          ProductName,",
+				"          Quantity,",
+				"          PricePerUnit,",
+				"          TotalPrice,",
+				"          Date = FormattedDate,",
+				"          CountryName = CountryUpperletter,",
+				"          CustomerName = CustomernameFirstletterCap,",
+				"          OrderYear,",
+				"          HighValueCustomer,",
+				"          ProductName = productnamelower",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"source2Orders aggregate(groupBy(CustomerID),",
+				"     Total_Amount = sum(Amount),",
+				"          Order_Count = count(OrderID),",
+				"          Max_Amount = max(Amount),",
+				"          Min_Amount = min(Amount)) ~> aggregate1",
+				"select1 sort(asc(OrderDate, true),",
+				"     desc(Amount, true),",
+				"     asc(Country, true),",
+				"     asc(CustomerName, true)) ~> sort1dayaByColumns",
+				"sort1dayaByColumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

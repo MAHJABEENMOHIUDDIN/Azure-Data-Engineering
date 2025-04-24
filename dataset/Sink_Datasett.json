@@ -1,0 +1,27 @@
+{
+	"name": "Sink_Datasett",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "target_AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "cleaned_retail.csv",
+					"type": "Expression"
+				},
+				"folderPath": "gold",
+				"fileSystem": "RetailSalesData"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
