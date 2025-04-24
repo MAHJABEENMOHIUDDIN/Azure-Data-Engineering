@@ -1,0 +1,25 @@
+{
+	"name": "trigger3",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "dataflow_joinTransformation_AzureDB_AzureTargetGen2Storage_pipeline1",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 2,
+				"startTime": "2025-04-24T17:06:00",
+				"endTime": "2025-04-24T15:15:00",
+				"timeZone": "AUS Eastern Standard Time"
+			}
+		}
+	}
+}
