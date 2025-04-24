@@ -70,28 +70,161 @@
 		"SqlServer1_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "sa"
-		},
-		"trigger1_properties_Copy_data_from_onprem_to_AzureDB_pipeline2_parameters_TableList": {
-			"type": "array",
-			"defaultValue": [
-				"Customers",
-				"Orders",
-				"OrderDetails"
-			]
-		},
-		"trigger2_properties_Copy_data_from_onprem_to_AzureDB_pipeline2_parameters_TableList": {
-			"type": "array",
-			"defaultValue": [
-				"Customers",
-				"Orders",
-				"OrderDetails"
-			]
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/source_CustomerDimension')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "target_AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "raw",
+						"fileSystem": "staging"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/source_data')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "target_AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"Tablenames": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().Tablenames",
+							"type": "Expression"
+						},
+						"folderPath": "raw",
+						"fileSystem": "staging"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": false,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/source_data1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "target_AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "raw",
+						"fileSystem": "staging"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/source_data2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "target_AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"tableName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().tableName",
+							"type": "Expression"
+						},
+						"folderPath": "raw",
+						"fileSystem": "staging"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/source_dataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "target_AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "DimCustomer",
+						"folderPath": "raw",
+						"fileSystem": "staging"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Onprem_SqlServer_new')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -591,7 +724,9 @@
 					]
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/source_dataset')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
@@ -668,6 +803,161 @@
 						"reenamecolumnusingselect filter(isNull(age) == false() && trim(toString(age)) != \"\" &&\r",
 						"isNull(join_date) == false() && trim(toString(join_date)) != \"\") ~> filternull",
 						"filternull sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow_joinTransformation_fromAzureDB_to_AzureTargetGen2StorageAccount')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable2",
+								"type": "DatasetReference"
+							},
+							"name": "Source1Customers"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable4",
+								"type": "DatasetReference"
+							},
+							"name": "source3OrderDetails"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable5",
+								"type": "DatasetReference"
+							},
+							"name": "source2Orders"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Sink_Datasett",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "join1"
+						},
+						{
+							"name": "join2"
+						},
+						{
+							"name": "filter2removingbaddata"
+						},
+						{
+							"name": "derivedColumn1"
+						},
+						{
+							"name": "select1"
+						},
+						{
+							"name": "aggregate1"
+						},
+						{
+							"name": "sort1dayaByColumns"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          CustomerID as string,",
+						"          CustomerName as string,",
+						"          Country as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> Source1Customers",
+						"source(output(",
+						"          DetailID as integer,",
+						"          OrderID as string,",
+						"          ProductName as string,",
+						"          Quantity as integer,",
+						"          PricePerUnit as decimal(10,2)",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source3OrderDetails",
+						"source(output(",
+						"          OrderID as string,",
+						"          CustomerID as string,",
+						"          OrderDate as timestamp,",
+						"          Amount as decimal(10,2)",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source2Orders",
+						"Source1Customers, source2Orders join(Source1Customers@CustomerID == source2Orders@CustomerID,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"join1, source3OrderDetails join(source2Orders@OrderID == source3OrderDetails@OrderID,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join2",
+						"join2 filter(Amount > 0 && PricePerUnit > 0) ~> filter2removingbaddata",
+						"filter2removingbaddata derive(TotalPrice = Quantity *PricePerUnit,",
+						"          FormattedDate = toString(OrderDate , 'yyyy-MM-dd'),",
+						"          CountryUpperletter = trim(upper(Country)),",
+						"          CustomernameFirstletterCap = trim(initCap(CustomerName)),",
+						"          OrderYear = year(OrderDate),",
+						"          HighValueCustomer = iif(Amount >= 200, 'Yes', 'No'),",
+						"          productnamelower = trim(lower(ProductName))) ~> derivedColumn1",
+						"derivedColumn1 select(mapColumn(",
+						"          CustomerID = Source1Customers@CustomerID,",
+						"          CustomerName,",
+						"          Country,",
+						"          OrderID = source2Orders@OrderID,",
+						"          CustomerID = source2Orders@CustomerID,",
+						"          OrderDate,",
+						"          Amount,",
+						"          DetailID,",
+						"          OrderID = source3OrderDetails@OrderID,",
+						"          ProductName,",
+						"          Quantity,",
+						"          PricePerUnit,",
+						"          TotalPrice,",
+						"          Date = FormattedDate,",
+						"          CountryName = CountryUpperletter,",
+						"          CustomerName = CustomernameFirstletterCap,",
+						"          OrderYear,",
+						"          HighValueCustomer,",
+						"          ProductName = productnamelower",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"source2Orders aggregate(groupBy(CustomerID),",
+						"     Total_Amount = sum(Amount),",
+						"          Order_Count = count(OrderID),",
+						"          Max_Amount = max(Amount),",
+						"          Min_Amount = min(Amount)) ~> aggregate1",
+						"select1 sort(asc(OrderDate, true),",
+						"     desc(Amount, true),",
+						"     asc(Country, true),",
+						"     asc(CustomerName, true)) ~> sort1dayaByColumns",
+						"sort1dayaByColumns sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     umask: 0022,",
 						"     preCommands: [],",
@@ -774,69 +1064,51 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/trigger1')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
+			"name": "[concat(parameters('factoryName'), '/dataflow_joinTransformation_AzureDB_AzureTargetGen2Storage_pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
+				"activities": [
 					{
-						"pipelineReference": {
-							"referenceName": "Copy_data_from_onprem_to_AzureDB_pipeline2",
-							"type": "PipelineReference"
+						"name": "dataflow_joinTransformation_AzureDB_AzureTargetGen2St",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
 						},
-						"parameters": {
-							"TableList": "[parameters('trigger1_properties_Copy_data_from_onprem_to_AzureDB_pipeline2_parameters_TableList')]"
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow_joinTransformation_fromAzureDB_to_AzureTargetGen2StorageAccount",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Source1Customers": {},
+									"source3OrderDetails": {},
+									"source2Orders": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
 						}
 					}
 				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Minute",
-						"interval": 1,
-						"startTime": "2025-04-24T11:28:08",
-						"endTime": "2025-04-24T11:35:19",
-						"timeZone": "AUS Eastern Standard Time"
-					}
-				}
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Copy_data_from_onprem_to_AzureDB_pipeline2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trigger2')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Copy_data_from_onprem_to_AzureDB_pipeline2",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"TableList": "[parameters('trigger2_properties_Copy_data_from_onprem_to_AzureDB_pipeline2_parameters_TableList')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Minute",
-						"interval": 1,
-						"startTime": "2025-04-14T11:15:00",
-						"endTime": "2025-04-24T11:20:00",
-						"timeZone": "AUS Eastern Standard Time"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Copy_data_from_onprem_to_AzureDB_pipeline2')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow_joinTransformation_fromAzureDB_to_AzureTargetGen2StorageAccount')]"
 			]
 		}
 	]

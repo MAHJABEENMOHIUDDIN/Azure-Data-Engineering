@@ -249,6 +249,26 @@
 					},
 					"SqlServer1_properties_typeProperties_userName": {
 						"value": "[parameters('SqlServer1_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'supermarket-datafactory_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "supermarket-datafactory_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
 					},
 					"trigger1_properties_Copy_data_from_onprem_to_AzureDB_pipeline2_parameters_TableList": {
 						"value": "[parameters('trigger1_properties_Copy_data_from_onprem_to_AzureDB_pipeline2_parameters_TableList')]"
@@ -259,7 +279,7 @@
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'supermarket-datafactory_ArmTemplate_0')]"
+				"[resourceId('Microsoft.Resources/deployments', 'supermarket-datafactory_ArmTemplate_1')]"
 			]
 		}
 	]
