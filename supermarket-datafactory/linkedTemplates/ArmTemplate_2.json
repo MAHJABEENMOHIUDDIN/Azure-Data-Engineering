@@ -65,7 +65,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -75,6 +75,13 @@
 						"parameters": {
 							"TableList": "[parameters('trigger2_properties_Copy_data_from_onprem_to_AzureDB_pipeline2_parameters_TableList')]"
 						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "dataflow_joinTransformation_AzureDB_AzureTargetGen2Storage_pipeline1",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -82,8 +89,8 @@
 					"recurrence": {
 						"frequency": "Minute",
 						"interval": 1,
-						"startTime": "2025-04-14T11:15:00",
-						"endTime": "2025-04-24T11:20:00",
+						"startTime": "2025-04-24T15:06:00",
+						"endTime": "2025-04-24T15:15:00",
 						"timeZone": "AUS Eastern Standard Time"
 					}
 				}
