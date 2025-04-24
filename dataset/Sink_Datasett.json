@@ -15,7 +15,7 @@
 					"type": "Expression"
 				},
 				"folderPath": "gold",
-				"fileSystem": "RetailSalesData"
+				"fileSystem": "staging"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
