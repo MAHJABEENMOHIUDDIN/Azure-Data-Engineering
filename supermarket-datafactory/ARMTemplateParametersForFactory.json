@@ -8,6 +8,12 @@
 		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
+		"AzureSqlDatabase1_password": {
+			"value": ""
+		},
+		"Onprem_SqlServer_new_password": {
+			"value": ""
+		},
 		"OnpremisesSqlServer_password": {
 			"value": ""
 		},
@@ -25,6 +31,24 @@
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://sourcestorageaccount1234.dfs.core.windows.net/"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "dataengineersqlserver.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "targetdb"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "CloudSAdb409445"
+		},
+		"Onprem_SqlServer_new_properties_typeProperties_server": {
+			"value": "Mahjabeen"
+		},
+		"Onprem_SqlServer_new_properties_typeProperties_database": {
+			"value": "SalesOrdersDB"
+		},
+		"Onprem_SqlServer_new_properties_typeProperties_userName": {
+			"value": "sa"
 		},
 		"OnpremisesSqlServer_properties_typeProperties_server": {
 			"value": "Mahjabeen"
@@ -58,6 +82,20 @@
 		},
 		"target_AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://targetlakestorageaccount.dfs.core.windows.net/"
+		},
+		"trigger1_properties_Copy_data_from_onprem_to_AzureDB_pipeline2_parameters_TableList": {
+			"value": [
+				"Customers",
+				"Orders",
+				"OrderDetails"
+			]
+		},
+		"trigger2_properties_Copy_data_from_onprem_to_AzureDB_pipeline2_parameters_TableList": {
+			"value": [
+				"Customers",
+				"Orders",
+				"OrderDetails"
+			]
 		}
 	}
 }
